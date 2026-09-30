@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import kotlin.math.abs
 
 @TeleOp(name = "Mecanum TeleOp")
-class Test : LinearOpMode() {
+class test : LinearOpMode() {
     override fun runOpMode() {
         val frontleft = hardwareMap.get("a") as DcMotorEx
         frontleft.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
@@ -53,5 +53,5 @@ class Test : LinearOpMode() {
             backleft.power = backLeftPower / denominator
             frontright.power = frontRightPower / denominator
             backright.power = backRightPower / denominator
-    }
-}}
+        }
+    }}
