@@ -10,22 +10,22 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 class yeehaw : LinearOpMode() {
     override fun runOpMode(){
 
-        val front_left = hardwareMap.get("a") as DcMotorEx
-        front_left.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
-        front_left.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        front_left.direction = DcMotorSimple.Direction.FORWARD
-        val front_right = hardwareMap.get("b") as DcMotorEx
-        front_right.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
-        front_right.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        front_right.direction = DcMotorSimple.Direction.REVERSE
-        val back_left = hardwareMap.get("c") as DcMotorEx
-        back_left.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
-        back_left.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        back_left.direction = DcMotorSimple.Direction.FORWARD
-        val back_right = hardwareMap.get("d") as DcMotorEx
-        back_right.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
-        back_right.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        back_right.direction = DcMotorSimple.Direction.REVERSE
+        val frontleft = hardwareMap.get("a") as DcMotorEx
+        frontleft.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
+        frontleft.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        frontleft.direction = DcMotorSimple.Direction.FORWARD
+        val frontright = hardwareMap.get("b") as DcMotorEx
+        frontright.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
+        frontright.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        frontright.direction = DcMotorSimple.Direction.REVERSE
+        val backleft = hardwareMap.get("c") as DcMotorEx
+        backleft.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
+        backleft.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        backleft.direction = DcMotorSimple.Direction.FORWARD
+        val backright = hardwareMap.get("d") as DcMotorEx
+        backright.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODERS
+        backright.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        backright.direction = DcMotorSimple.Direction.REVERSE
 
         waitForStart()
 
