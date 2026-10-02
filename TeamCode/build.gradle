@@ -15,14 +15,13 @@ apply plugin: 'com.android.application'
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
-apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-android'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
-    kotlinOptions {
-        jvmTarget = '21'
+    kotlinOptions{
+        jvmTarget=1.8
     }
-
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
@@ -30,5 +29,5 @@ android {
 
 dependencies {
     implementation project(':FtcRobotController')
-    implementation 'androidx.core:core-ktx:1.19.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

@@ -29,7 +29,7 @@ class yeehaw : LinearOpMode() {
 
         waitForStart()
 
-        while(opModeIsActive()){
+        while (opModeIsActive()){
 
         }
     }
