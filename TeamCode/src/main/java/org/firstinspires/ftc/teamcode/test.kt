@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import kotlin.math.abs // <-- Added for absolute value math
 
 @TeleOp(name = "Mecanum TeleOp")
-class Test : LinearOpMode() { // Note: Capitalized class names are standard practice in Kotlin
+class test : LinearOpMode() { // Note: Capitalized class names are standard practice in Kotlin
     override fun runOpMode() {
         // Fix: Changed RUN_WITHOUT_ENCODERS to RUN_WITHOUT_ENCODER
         val frontleft = hardwareMap.get("a") as DcMotorEx
