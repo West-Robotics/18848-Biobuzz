@@ -8,23 +8,24 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit
 import kotlin.math.abs
 
-class wwwrapper (
+class wwwrapper(
     hardwareMap: HardwareMap,
     name: String,
     dir: Direction,
     zpb: ZeroPowerBehavior,
     private val eps: Double = 0.005,
-    currentThresh: Double = 8.0,
-
+    currentThresh: Double = 8.0
 ) {
-    private val motor = hardwareMap.dcMotor.get(name) as DcMotorEx
+    private val motor = hardwareMap.get(DcMotorEx::class.java, name)
     private var _effort = 0.0
 
     var effort
         get() = _effort
-        set(value) = if (abs(value - _effort) > eps) {
-            _effort = value
-        } else Unit
+        set(value) {
+            if (abs(value - _effort) > eps) {
+                _effort = value
+            }
+        }
 
     val isOverCurrent
         get() = motor.isOverCurrent
@@ -39,10 +40,7 @@ class wwwrapper (
         motor.setCurrentAlert(currentThresh, CurrentUnit.AMPS)
     }
 
-    /**
-     * Perform hardware write
-     **/
-    fun write() { motor.power = effort }
-
-
+    fun write() {
+        motor.power = effort
+    }
 }
