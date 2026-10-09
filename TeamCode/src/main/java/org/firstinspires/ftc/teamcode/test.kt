@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.HardwareMap
+
 import org.firstinspires.ftc.teamcode.wwwrapper
 import kotlin.math.abs // <-- Added for absolute value math
 
@@ -15,7 +17,6 @@ import kotlin.math.abs // <-- Added for absolute value math
     private val backLeft = wwwrapper(hardwareMap, "backLeft", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
     private val backRight = wwwrapper(hardwareMap, "backRight", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
     private val frontRight = wwwrapper (hardwareMap, "frontRight", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
-    val pinpoint: GoBildaPinpointDriver = hardwareMap.get(GoBildaPinpointDriver::class.java, "pinpoint")
     }*/
 
 class test : LinearOpMode() { // Note: Capitalized class names are standard practice in Kotlin
