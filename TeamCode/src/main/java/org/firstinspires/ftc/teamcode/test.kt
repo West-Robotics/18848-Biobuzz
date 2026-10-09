@@ -2,12 +2,24 @@ package org.firstinspires.ftc.teamcode
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import kotlin.math.abs
 
-@TeleOp(name = "Mecanum TeleOp")
-class MecanumTeleOp : LinearOpMode() {
+@TeleOp(name = "Mecanum TeleO")
+
+
+
+/*class test(hardwareMap: HardwareMap, private val voltageMultiplier: Double = 1.0) {
+    private val frontLeft = wwwrapper(hardwareMap, "frontLeft", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+    private val backLeft = wwwrapper(hardwareMap, "backLeft", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+    private val backRight = wwwrapper(hardwareMap, "backRight", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+    private val frontRight = wwwrapper (hardwareMap, "frontRight", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
+    }*/
+
+class test : LinearOpMode() { // Note: Capitalized class names are standard practice in Kotlin
+
     override fun runOpMode() {
 
         val frontLeft = wwwrapper(hardwareMap, "a", Direction.FORWARD, ZeroPowerBehavior.BRAKE)
