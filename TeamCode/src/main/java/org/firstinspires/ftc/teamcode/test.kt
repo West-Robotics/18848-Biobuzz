@@ -5,9 +5,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import org.firstinspires.ftc.teamcode.wwwrapper
 import kotlin.math.abs // <-- Added for absolute value math
 
 @TeleOp(name = "Mecanum TeleOp")
+
+/*class test(hardwareMap: HardwareMap, private val voltageMultiplier: Double = 1.0) {
+    private val frontLeft = wwwrapper(hardwareMap, "frontLeft", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+    private val backLeft = wwwrapper(hardwareMap, "backLeft", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+    private val backRight = wwwrapper(hardwareMap, "backRight", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+    private val frontRight = wwwrapper (hardwareMap, "frontRight", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
+    val pinpoint: GoBildaPinpointDriver = hardwareMap.get(GoBildaPinpointDriver::class.java, "pinpoint")
+    }*/
+
 class test : LinearOpMode() { // Note: Capitalized class names are standard practice in Kotlin
     override fun runOpMode() {
         // Fix: Changed RUN_WITHOUT_ENCODERS to RUN_WITHOUT_ENCODER
