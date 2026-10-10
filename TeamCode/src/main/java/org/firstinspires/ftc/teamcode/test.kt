@@ -8,22 +8,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.wwwrapper
 import kotlin.math.abs // <-- Added for absolute value math
-
-
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import kotlin.math.abs
 
 @TeleOp(name = "Mecanum TeleO")
 
-
-
-/*class test(hardwareMap: HardwareMap, private val voltageMultiplier: Double = 1.0) {
-    private val frontLeft = wwwrapper(hardwareMap, "frontLeft", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
-    private val backLeft = wwwrapper(hardwareMap, "backLeft", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
-    private val backRight = wwwrapper(hardwareMap, "backRight", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
-    private val frontRight = wwwrapper (hardwareMap, "frontRight", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
-    }*/
+/* class test(hardwareMap: HardwareMap, private val voltageMultiplier: Double = 1.0) */
 
 class test : LinearOpMode() { // Note: Capitalized class names are standard practice in Kotlin
 
