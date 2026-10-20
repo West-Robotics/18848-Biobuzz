@@ -20,10 +20,17 @@ class test : LinearOpMode() { // Note: Capitalized class names are standard prac
 
     override fun runOpMode() {
 
+<<<<<<< HEAD
         val frontLeft = wwwrapper(hardwareMap, "a", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
         val frontRight = wwwrapper(hardwareMap, "b", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
         val backLeft = wwwrapper(hardwareMap, "c", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
         val backRight = wwwrapper(hardwareMap, "d", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
+=======
+        val frontLeft = wwwrapper(hardwareMap, "a", Direction.FORWARD, ZeroPowerBehavior.BRAKE)
+        val frontRight = wwwrapper(hardwareMap, "b", Direction.FORWARD, ZeroPowerBehavior.BRAKE)
+        val backLeft = wwwrapper(hardwareMap, "c", Direction.REVERSE, ZeroPowerBehavior.BRAKE)
+        val backRight = wwwrapper(hardwareMap, "d", Direction.REVERSE, ZeroPowerBehavior.BRAKE)
+>>>>>>> cf6f605c0dab34bc615a23958d4b1d8cbcb5e5ed
 
         waitForStart()
 
