@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import kotlin.math.abs
 
-@TeleOp(name = "Mecanum TeleO")
+@TeleOp(name = "Mecanum TeleOp")
 
 /* class test(hardwareMap: HardwareMap, private val voltageMultiplier: Double = 1.0) */
 
@@ -20,10 +20,10 @@ class test : LinearOpMode() { // Note: Capitalized class names are standard prac
 
     override fun runOpMode() {
 
-        val frontLeft = wwwrapper(hardwareMap, "a", Direction.FORWARD, ZeroPowerBehavior.BRAKE)
-        val frontRight = wwwrapper(hardwareMap, "b", Direction.REVERSE, ZeroPowerBehavior.BRAKE)
-        val backLeft = wwwrapper(hardwareMap, "c", Direction.FORWARD, ZeroPowerBehavior.BRAKE)
-        val backRight = wwwrapper(hardwareMap, "d", Direction.REVERSE, ZeroPowerBehavior.BRAKE)
+        val frontLeft = wwwrapper(hardwareMap, "a", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+        val frontRight = wwwrapper(hardwareMap, "b", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
+        val backLeft = wwwrapper(hardwareMap, "c", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+        val backRight = wwwrapper(hardwareMap, "d", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
 
         waitForStart()
 
