@@ -39,6 +39,13 @@ class test : LinearOpMode() { // Note: Capitalized class names are standard prac
             val frontRightPower = y - x - rx
             val backRightPower = y + x - rx
 
+            /*
+            val frontLeftPower = y - x + rx
+            val backLeftPower = -y - x + rx
+            val frontRightPower = -y - x - rx
+            val backRightPower = y - x - rx
+            */
+
 
             val denominator = maxOf(abs(frontLeftPower), abs(backLeftPower), abs(frontRightPower), abs(backRightPower), 1.0)
 
