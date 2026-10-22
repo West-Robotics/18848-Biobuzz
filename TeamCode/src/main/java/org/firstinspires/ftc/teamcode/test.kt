@@ -9,7 +9,7 @@ import kotlin.math.abs
 @TeleOp(name = "Mecanum TeleOp")
 class test : LinearOpMode() {
 
-    // 1.0 normally. If the robot drives and strafes backwards, set to -1.0
+
     private val dir = 1.0
 
     override fun runOpMode() {
@@ -23,8 +23,8 @@ class test : LinearOpMode() {
         while (opModeIsActive()) {
             val speedMultiplier = 1.0
 
-            val y = -gamepad1.left_stick_y.toDouble() * 1.1 * dir * speedMultiplier // toward intake
-            val x = gamepad1.left_stick_x.toDouble() * dir * speedMultiplier        // robot's right
+            val y = -gamepad1.left_stick_y.toDouble() * 1.1 * dir * speedMultiplier 
+            val x = gamepad1.left_stick_x.toDouble() * dir * speedMultiplier
             val rx = gamepad1.right_stick_x.toDouble() * speedMultiplier
 
             val frontLeftPower = y - x + rx
