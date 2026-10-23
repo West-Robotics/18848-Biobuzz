@@ -27,9 +27,9 @@ class test : LinearOpMode() {
             val x = gamepad1.left_stick_x.toDouble() * dir * speedMultiplier
             val rx = gamepad1.right_stick_x.toDouble() * speedMultiplier
 
-            val frontLeftPower = y - x + rx
-            val backLeftPower = -y - x + rx
-            val frontRightPower = -y - x - rx
+            val frontLeftPower = y + x + rx
+            val backLeftPower = y - x + rx
+            val frontRightPower = y + x - rx
             val backRightPower = y - x - rx
 
             val denominator = maxOf(
