@@ -23,7 +23,7 @@ class test : LinearOpMode() {
         while (opModeIsActive()) {
             val speedMultiplier = 1.0
 
-            val y = -gamepad1.left_stick_y.toDouble() * 1.1 * dir * speedMultiplier 
+            val y = -gamepad1.left_stick_y.toDouble() * 1.1 * dir * speedMultiplier
             val x = gamepad1.left_stick_x.toDouble() * dir * speedMultiplier
             val rx = gamepad1.right_stick_x.toDouble() * speedMultiplier
 
