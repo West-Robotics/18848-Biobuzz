@@ -1,18 +1,13 @@
 package org.firstinspires.ftc.teamcode
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import com.qualcomm.robotcore.hardware.IMU
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import kotlin.math.abs
-import kotlin.math.cos
-import kotlin.math.sin
 
-@TeleOp(name = "Field Centric TeleOp")
-class fieldcentric : LinearOpMode() {
+@TeleOp(name = "Mecanum TeleOp")
+class yeehaw : LinearOpMode() {
 
     private val dir = 1.0
 
@@ -22,37 +17,14 @@ class fieldcentric : LinearOpMode() {
         val backLeft = wwwrapper(hardwareMap, "bL", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
         val backRight = wwwrapper(hardwareMap, "bR", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
 
-        // Set these two to match how the Control Hub is physically mounted
-        val imu = hardwareMap.get(IMU::class.java, "imu")
-        imu.initialize(
-            IMU.Parameters(
-                RevHubOrientationOnRobot(
-                    RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                    RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
-                )
-            )
-        )
-
-        telemetry.addLine("Point the robot the way you want to be 'forward', then press Options to reset heading")
-        telemetry.update()
         waitForStart()
-        imu.resetYaw()
 
         while (opModeIsActive()) {
-            if (gamepad1.options) imu.resetYaw()
+            val speedMultiplier = 1.0
 
-            val heading = imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS)
-
-            val stickY = -gamepad1.left_stick_y.toDouble()
-            val stickX = gamepad1.left_stick_x.toDouble()
-            val rx = gamepad1.right_stick_x.toDouble()
-
-            // rotate the stick vector by -heading
-            val rotX = stickX * cos(heading) + stickY * sin(heading)
-            val rotY = -stickX * sin(heading) + stickY * cos(heading)
-
-            val y = rotY * 1.1 * dir
-            val x = rotX * dir
+            val y = -gamepad1.left_stick_y.toDouble() * 1.1 * dir * speedMultiplier
+            val x = gamepad1.left_stick_x.toDouble() * dir * speedMultiplier
+            val rx = gamepad1.right_stick_x.toDouble() * speedMultiplier
 
             val frontLeftPower = y + x + rx
             val backLeftPower = y - x + rx
@@ -73,9 +45,6 @@ class fieldcentric : LinearOpMode() {
             backLeft.write()
             frontRight.write()
             backRight.write()
-
-            telemetry.addData("Heading (deg)", Math.toDegrees(heading))
-            telemetry.update()
         }
     }
 }

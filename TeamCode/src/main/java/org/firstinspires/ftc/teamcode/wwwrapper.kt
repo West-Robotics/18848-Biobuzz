@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode
+
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.DcMotorEx
@@ -16,15 +17,9 @@ class wwwrapper(
     currentThresh: Double = 8.0
 ) {
     private val motor = hardwareMap.get(DcMotorEx::class.java, name)
-    private var _effort = 0.0
+    private var lastWritten = Double.NaN
 
-    var effort
-        get() = _effort
-        set(value) {
-            if (abs(value - _effort) > eps) {
-                _effort = value
-            }
-        }
+    var effort = 0.0
 
     val isOverCurrent
         get() = motor.isOverCurrent
@@ -40,6 +35,13 @@ class wwwrapper(
     }
 
     fun write() {
-        motor.power = effort
+        val target = effort.coerceIn(-1.0, 1.0)
+        // always send an exact zero so the motor can fully stop
+        if (lastWritten.isNaN() || abs(target - lastWritten) > eps ||
+            (target == 0.0 && lastWritten != 0.0)
+        ) {
+            motor.power = target
+            lastWritten = target
+        }
     }
 }
