@@ -39,16 +39,20 @@ class test : LinearOpMode() {
         while (opModeIsActive()) {
             val speedMultiplier = 1.0
 
-            val y = -gamepad1.left_stick_y.toDouble() * 1.1 * dir * speedMultiplier
-            val x = gamepad1.left_stick_x.toDouble() * dir * speedMultiplier
+            val stickY = -gamepad1.left_stick_y.toDouble() * 1.1 * dir * speedMultiplier
+            val stickX = gamepad1.left_stick_x.toDouble() * dir * speedMultiplier
             val rx = gamepad1.right_stick_x.toDouble() * speedMultiplier
 
             val botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)
 
 
+
             // Rotate the movement direction counter to the bot's rotation
-            val rotX = x * cos(-botHeading) - y * sin(-botHeading)
-            val rotY = x * sin(-botHeading) + y * cos(-botHeading)
+            val rotX = stickX * cos(-botHeading) - stickY * sin(-botHeading)
+            val rotY = stickX * sin(-botHeading) + stickY * cos(-botHeading)
+
+            val y = rotY * 1.1 * dir
+            val x = rotX * dir
 
             val frontLeftPower = y + x + rx
             val backLeftPower = y - x + rx
