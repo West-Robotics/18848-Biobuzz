@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import kotlin.math.abs
 
-@TeleOp(name = "Mecanum TeleOp")
+@TeleOp(name = "NOT field centric TeleOp")
 class yeehaw : LinearOpMode() {
 
     private val dir = 1.0
