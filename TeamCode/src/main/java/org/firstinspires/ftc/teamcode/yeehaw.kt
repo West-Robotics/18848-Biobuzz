@@ -17,9 +17,6 @@ class yeehaw : LinearOpMode() {
         val backLeft = wwwrapper(hardwareMap, "bL", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
         val backRight = wwwrapper(hardwareMap, "bR", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
 
-        // If the intake spins the wrong way, change FORWARD to REVERSE here
-        val intake = wwwrapper(hardwareMap, "intake", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.FLOAT)
-
         waitForStart()
 
         while (opModeIsActive()) {
@@ -44,17 +41,10 @@ class yeehaw : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
-            // right trigger = intake, left trigger = reverse
-            intake.effort = (gamepad1.right_trigger - gamepad1.left_trigger).toDouble()
-
             frontLeft.write()
             backLeft.write()
             frontRight.write()
             backRight.write()
-            intake.write()
-
-            telemetry.addData("Intake power", intake.effort)
-            telemetry.update()
         }
     }
 }
