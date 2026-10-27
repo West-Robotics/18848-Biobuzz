@@ -11,8 +11,8 @@ import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 
-@TeleOp(name = "Field Centric 2 TeleOp")
-class fieldcentric : LinearOpMode() {
+@TeleOp(name = "Field Centric TeleOp")
+class FieldCentric : LinearOpMode() {
 
     private val dir = 1.0
 
@@ -21,6 +21,9 @@ class fieldcentric : LinearOpMode() {
         val frontRight = wwwrapper(hardwareMap, "fR", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
         val backLeft = wwwrapper(hardwareMap, "bL", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
         val backRight = wwwrapper(hardwareMap, "bR", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
+
+        // If the intake spins clockwise, change FORWARD to REVERSE here
+        val intake = wwwrapper(hardwareMap, "intake", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.FLOAT)
 
         val imu = hardwareMap.get(IMU::class.java, "imu")
         imu.initialize(
@@ -32,7 +35,7 @@ class fieldcentric : LinearOpMode() {
             )
         )
 
-        telemetry.addLine("Point the robot the way you want to be 'forward', then press Start. Options resets heading.")
+        telemetry.addLine("Point the robot the way you want to be forward, then press play")
         telemetry.update()
         waitForStart()
         imu.resetYaw()
@@ -68,12 +71,17 @@ class fieldcentric : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
+            // right trigger = intake, left trigger = reverse
+            intake.effort = (gamepad1.right_trigger - gamepad1.left_trigger).toDouble()
+
             frontLeft.write()
             backLeft.write()
             frontRight.write()
             backRight.write()
+            intake.write()
 
             telemetry.addData("Heading (deg)", Math.toDegrees(heading))
+            telemetry.addData("Intake power", intake.effort)
             telemetry.update()
         }
     }
