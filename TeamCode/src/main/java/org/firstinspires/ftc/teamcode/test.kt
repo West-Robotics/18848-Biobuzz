@@ -12,7 +12,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 
-@TeleOp(name = "Field centric 1 TeleOp")
+@TeleOp(name = "Field centric 1 TeleOp (not working)")
 class test : LinearOpMode() {
 
     private val dir = 1.0

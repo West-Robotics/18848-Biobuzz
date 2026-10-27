@@ -11,7 +11,7 @@ import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 
-@TeleOp(name = "Field Centric 2 TeleOp")
+@TeleOp(name = "Field Centric 2 TeleOp (works)")
 class fieldcentric : LinearOpMode() {
 
     private val dir = 1.0
