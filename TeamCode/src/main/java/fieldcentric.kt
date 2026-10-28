@@ -22,6 +22,8 @@ class FieldCentric : LinearOpMode() {
         val backLeft = wwwrapper(hardwareMap, "bL", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
         val backRight = wwwrapper(hardwareMap, "bR", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
 
+        val intake = Intake(hardwareMap)
+
         val imu = hardwareMap.get(IMU::class.java, "imu")
         imu.initialize(
             IMU.Parameters(
@@ -68,12 +70,17 @@ class FieldCentric : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
+            // right trigger = intake
+            intake.power = gamepad1.right_trigger.toDouble()
+
             frontLeft.write()
             backLeft.write()
             frontRight.write()
             backRight.write()
+            intake.write()
 
             telemetry.addData("Heading (deg)", Math.toDegrees(heading))
+            telemetry.addData("Intake power", intake.power)
             telemetry.update()
         }
     }

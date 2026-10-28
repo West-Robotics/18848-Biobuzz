@@ -17,6 +17,8 @@ class yeehaw : LinearOpMode() {
         val backLeft = wwwrapper(hardwareMap, "bL", DcMotorSimple.Direction.REVERSE, DcMotor.ZeroPowerBehavior.BRAKE)
         val backRight = wwwrapper(hardwareMap, "bR", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
 
+        val intake = Intake(hardwareMap)
+
         waitForStart()
 
         while (opModeIsActive()) {
@@ -41,10 +43,17 @@ class yeehaw : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
+            // right trigger = intake
+            intake.power = gamepad1.right_trigger.toDouble()
+
             frontLeft.write()
             backLeft.write()
             frontRight.write()
             backRight.write()
+            intake.write()
+
+            telemetry.addData("Intake power", intake.power)
+            telemetry.update()
         }
     }
 }
