@@ -6,12 +6,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 
 class Intake(hardwareMap: HardwareMap) {
 
-    // If the intake spins the wrong way, change FORWARD to REVERSE here.
-    // This is the only place you need to change it.
+    
     private val motor = wwwrapper(
         hardwareMap,
         "intake",
-        DcMotorSimple.Direction.FORWARD,
+        DcMotorSimple.Direction.REVERSE,
         DcMotor.ZeroPowerBehavior.FLOAT
     )
 
