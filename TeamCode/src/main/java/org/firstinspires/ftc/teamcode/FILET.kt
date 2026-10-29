@@ -20,6 +20,9 @@ class FILET : LinearOpMode() {
         val intake = Intake(hardwareMap)
         val flywheel = Flywheel(hardwareMap)
 
+        // Initialize the Gate: pass hardwareMap, original angle (e.g., 0.0°), and target angle (e.g., 90.0°)
+        val gate = Gate(hardwareMap, originalAngle = 0.0, targetAngle = 90.0)
+
         waitForStart()
 
         while (opModeIsActive()) {
@@ -44,14 +47,21 @@ class FILET : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
-
+            // Right trigger runs intake forward, Left trigger reverses it
             intake.power = gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble()
 
-
+            // Flywheel control (using Right Bumper instead since Left Bumper now controls the gate)
             if (gamepad1.right_bumper) {
                 flywheel.power = 1.0
             } else {
                 flywheel.power = 0.0
+            }
+
+            // Left bumper controls the Gate servo angles
+            if (gamepad1.left_bumper) {
+                gate.goTarget()
+            } else {
+                gate.goHome()
             }
 
             frontLeft.write()
@@ -63,6 +73,7 @@ class FILET : LinearOpMode() {
 
             telemetry.addData("Intake power", intake.power)
             telemetry.addData("Flywheel power", flywheel.power)
+            telemetry.addData("Gate State", if (gamepad1.left_bumper) "Target" else "Home")
             telemetry.update()
         }
     }
