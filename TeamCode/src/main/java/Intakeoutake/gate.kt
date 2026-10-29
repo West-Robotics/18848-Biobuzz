@@ -12,6 +12,7 @@ class Gate(
 
     init {
         servo.scaleRange(0.0, 1.0)
+        goHome() // <--- This moves the servo to 315.0° immediately on startup!
     }
 
     private fun angleToPosition(angle: Double): Double {
