@@ -5,40 +5,26 @@ import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.ServoImplEx
 import org.firstinspires.ftc.teamcode.component.WrappedServo
 
-class Gate(
-    hardwareMap: HardwareMap,
-    initialAngle: Double = 315.0
-) {
+class Gate(hardwareMap: HardwareMap) {
     private val servo = WrappedServo(
         deviceSupplier = { hardwareMap.get(ServoImplEx::class.java, "gate") },
         pwm = WrappedServo.ModelPWM.AXON_MINI,
-        initialPosition = angleToPosition(initialAngle),
+        initialPosition = 0.5, // Starts right in the middle (0.0 to 1.0)
         initialDirection = Servo.Direction.FORWARD
     )
 
-    // Tracks the current live angle of the gate
-    var currentAngle: Double = initialAngle
+    // Tracks the current position (from 0.0 to 1.0)
+    var currentPosition: Double = 0.5
         private set
 
     init {
-        setAngle(initialAngle)
+        // No forced movement on init—it starts wherever the servo naturally sits or holds its position
     }
 
-    private fun angleToPosition(angle: Double): Double {
-        val clampedAngle = angle.coerceIn(0.0, 360.0)
-        return clampedAngle / 360.0
-    }
-
-    // Adjusts the angle by a specific step (e.g., +1° or -1°)
-    fun changeAngle(delta: Double) {
-        currentAngle = (currentAngle + delta).coerceIn(0.0, 360.0)
-        servo.position = angleToPosition(currentAngle)
-    }
-
-    // Sets the angle directly
-    fun setAngle(angle: Double) {
-        currentAngle = angle.coerceIn(0.0, 360.0)
-        servo.position = angleToPosition(currentAngle)
+    // Nudges the position up or down when D-pad is held
+    fun move(delta: Double) {
+        currentPosition = (currentPosition + delta).coerceIn(0.0, 1.0)
+        servo.position = currentPosition
     }
 
     fun write() {

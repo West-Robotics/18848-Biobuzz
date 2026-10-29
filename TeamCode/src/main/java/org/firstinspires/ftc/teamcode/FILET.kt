@@ -19,9 +19,7 @@ class FILET : LinearOpMode() {
 
         val intake = Intake(hardwareMap)
         val flywheel = Flywheel(hardwareMap)
-
-        // Initialize the Gate starting at 315°
-        val gate = Gate(hardwareMap, initialAngle = 315.0)
+        val gate = Gate(hardwareMap)
 
         waitForStart()
 
@@ -48,22 +46,21 @@ class FILET : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
-            // Intake control (Right trigger forward, Left trigger reverse)
+            // Intake control
             intake.power = gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble()
 
-            // Flywheel control on right bumper
+            // Flywheel control
             if (gamepad1.right_bumper) {
                 flywheel.power = 1.0
             } else {
                 flywheel.power = 0.0
             }
 
-            // D-Pad controls for 360° gate tuning:
-            // Holding D-Pad Right increases the angle; D-Pad Left decreases it
+            // D-Pad servo control (Hold right to move one way, hold left to move the other)
             if (gamepad1.dpad_right) {
-                gate.changeAngle(0.5) // Adjusts speed of movement (0.5 degrees per loop)
+                gate.move(0.005) // Adjust speed by changing this number
             } else if (gamepad1.dpad_left) {
-                gate.changeAngle(-0.5)
+                gate.move(-0.005)
             }
 
             // Write all hardware outputs
@@ -75,10 +72,10 @@ class FILET : LinearOpMode() {
             flywheel.write()
             gate.write()
 
-            // Telemetry to track everything live
+            // Telemetry to see the exact position value on your screen
             telemetry.addData("Intake power", intake.power)
             telemetry.addData("Flywheel power", flywheel.power)
-            telemetry.addData("Gate Current Angle (°)", gate.currentAngle)
+            telemetry.addData("Gate Position (0.0 - 1.0)", gate.currentPosition)
             telemetry.update()
         }
     }
