@@ -23,6 +23,8 @@ class FieldCentric : LinearOpMode() {
         val backRight = wwwrapper(hardwareMap, "bR", DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE)
 
         val intake = Intake(hardwareMap)
+        val flywheel = Flywheel(hardwareMap)
+
 
         val imu = hardwareMap.get(IMU::class.java, "imu")
         imu.initialize(
@@ -72,6 +74,14 @@ class FieldCentric : LinearOpMode() {
 
             // right trigger = intake
             intake.power = gamepad1.right_trigger.toDouble()
+
+
+            if (gamepad1.right_bumper) {
+                flywheel.power = 1.0
+            } else {
+                flywheel.power = 0.0
+            }
+
 
             frontLeft.write()
             backLeft.write()
