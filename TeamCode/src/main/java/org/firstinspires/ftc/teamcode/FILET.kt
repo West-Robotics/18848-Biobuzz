@@ -26,7 +26,6 @@ class FILET : LinearOpMode() {
         while (opModeIsActive()) {
             val speedMultiplier = 1.0
 
-            // Joystick math
             val y = -gamepad1.left_stick_y.toDouble() * dir * speedMultiplier
             val x = gamepad1.left_stick_x.toDouble() * dir * speedMultiplier
             val rx = gamepad1.right_stick_x.toDouble() * speedMultiplier
@@ -46,36 +45,30 @@ class FILET : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
-            // Intake control
             intake.power = gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble()
 
-            // Flywheel control
             if (gamepad1.right_bumper) {
                 flywheel.power = 1.0
             } else {
                 flywheel.power = 0.0
             }
 
-            // D-Pad servo control (Hold right to move one way, hold left to move the other)
             if (gamepad1.dpad_right) {
-                gate.move(0.005) // Adjust speed by changing this number
+                gate.move(0.005) //
             } else if (gamepad1.dpad_left) {
                 gate.move(-0.005)
             }
 
-            // Write all hardware outputs
             frontLeft.write()
             backLeft.write()
             frontRight.write()
             backRight.write()
             intake.write()
             flywheel.write()
-            gate.write()
 
-            // Telemetry to see the exact position value on your screen
             telemetry.addData("Intake power", intake.power)
             telemetry.addData("Flywheel power", flywheel.power)
-            telemetry.addData("Gate Position (0.0 - 1.0)", gate.currentPosition)
+            telemetry.addData("Gate Position", gate.position)
             telemetry.update()
         }
     }
