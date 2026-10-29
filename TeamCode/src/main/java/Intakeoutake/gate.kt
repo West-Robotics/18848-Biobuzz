@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo
 
 class Gate(
     hardwareMap: HardwareMap,
-    private val originalAngle: Double = 0.0,
-    private val targetAngle: Double = 180.0
+    private val originalAngle: Double = 315.0,
+    private val targetAngle: Double = 340.0
 ) {
     //
     private val servo: Servo = hardwareMap.get(Servo::class.java, "gate")
