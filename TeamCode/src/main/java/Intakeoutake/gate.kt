@@ -2,17 +2,26 @@ package org.firstinspires.ftc.teamcode
 
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
+import com.qualcomm.robotcore.hardware.ServoImplEx
+import org.firstinspires.ftc.teamcode.component.WrappedServo
 
 class Gate(
     hardwareMap: HardwareMap,
-    private val originalAngle: Double = 315.0,
-    private val targetAngle: Double = 340.0
+    initialAngle: Double = 315.0
 ) {
-    private val servo: Servo = hardwareMap.get(Servo::class.java, "gate")
+    private val servo = WrappedServo(
+        deviceSupplier = { hardwareMap.get(ServoImplEx::class.java, "gate") },
+        pwm = WrappedServo.ModelPWM.AXON_MINI,
+        initialPosition = angleToPosition(initialAngle),
+        initialDirection = Servo.Direction.FORWARD
+    )
+
+    // Tracks the current live angle of the gate
+    var currentAngle: Double = initialAngle
+        private set
 
     init {
-        servo.scaleRange(0.0, 1.0)
-        goHome() // <--- This moves the servo to 315.0° immediately on startup!
+        setAngle(initialAngle)
     }
 
     private fun angleToPosition(angle: Double): Double {
@@ -20,19 +29,19 @@ class Gate(
         return clampedAngle / 360.0
     }
 
-    fun goHome() {
-        servo.position = angleToPosition(originalAngle)
+    // Adjusts the angle by a specific step (e.g., +1° or -1°)
+    fun changeAngle(delta: Double) {
+        currentAngle = (currentAngle + delta).coerceIn(0.0, 360.0)
+        servo.position = angleToPosition(currentAngle)
     }
 
-    fun goTarget() {
-        servo.position = angleToPosition(targetAngle)
+    // Sets the angle directly
+    fun setAngle(angle: Double) {
+        currentAngle = angle.coerceIn(0.0, 360.0)
+        servo.position = angleToPosition(currentAngle)
     }
 
-    fun toggle(isOpen: Boolean) {
-        if (isOpen) {
-            goTarget()
-        } else {
-            goHome()
-        }
+    fun write() {
+        servo.write()
     }
 }
