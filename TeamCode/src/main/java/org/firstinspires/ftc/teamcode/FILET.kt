@@ -21,6 +21,8 @@ class FILET : LinearOpMode() {
         val flywheel = Flywheel(hardwareMap)
         val gate = Gate(hardwareMap)
 
+        var previousLeftBumper = false
+
         waitForStart()
 
         while (opModeIsActive()) {
@@ -53,11 +55,11 @@ class FILET : LinearOpMode() {
                 flywheel.power = 0.0
             }
 
-            if (gamepad1.dpad_right) {
-                gate.move(0.005) //
-            } else if (gamepad1.dpad_left) {
-                gate.move(-0.005)
+            val currentLeftBumper = gamepad1.left_bumper
+            if (currentLeftBumper && !previousLeftBumper) {
+                gate.toggle()
             }
+            previousLeftBumper = currentLeftBumper
 
             frontLeft.write()
             backLeft.write()
@@ -68,7 +70,7 @@ class FILET : LinearOpMode() {
 
             telemetry.addData("Intake power", intake.power)
             telemetry.addData("Flywheel power", flywheel.power)
-            telemetry.addData("Gate Position", gate.position)
+            telemetry.addData("Gate State", if (gate.isAtTarget()) "Target" else "Home")
             telemetry.update()
         }
     }
