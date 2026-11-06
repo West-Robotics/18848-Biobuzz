@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 
 class Intake(hardwareMap: HardwareMap) {
 
-    
     private val motor = wwwrapper(
         hardwareMap,
         "intake",
@@ -14,10 +13,12 @@ class Intake(hardwareMap: HardwareMap) {
         DcMotor.ZeroPowerBehavior.FLOAT
     )
 
+    private val maxSpeedLimit = 0.75
+
     var power: Double
         get() = motor.effort
         set(value) {
-            motor.effort = value
+            motor.effort = value * maxSpeedLimit
         }
 
     fun write() {

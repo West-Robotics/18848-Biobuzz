@@ -1,15 +1,17 @@
 package org.firstinspires.ftc.teamcode
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import com.qualcomm.robotcore.hardware.IMU
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
+
+val GoBildaPinpointDriver.heading: Double
+    get() = getHeading(AngleUnit.RADIANS)
 
 @TeleOp(name = "Field Centric TeleOp")
 class FieldCentric : LinearOpMode() {
@@ -24,33 +26,33 @@ class FieldCentric : LinearOpMode() {
 
         val intake = Intake(hardwareMap)
         val flywheel = Flywheel(hardwareMap)
+        val gate = Gate(hardwareMap)
 
+        val pinpoint = hardwareMap.get(GoBildaPinpointDriver::class.java, "pinpoint")
+        pinpoint.recalibrateIMU()
+        pinpoint.resetPosAndIMU()
 
-        val imu = hardwareMap.get(IMU::class.java, "imu")
-        imu.initialize(
-            IMU.Parameters(
-                RevHubOrientationOnRobot(
-                    RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
-                    RevHubOrientationOnRobot.UsbFacingDirection.DOWN
-                )
-            )
-        )
-
-        telemetry.addLine("Point the robot the way you want to be 'forward', then press Start. Options resets heading.")
+        telemetry.addLine("Pinpoint Initialized. Point forward and press Start. Options resets heading.")
         telemetry.update()
+
         waitForStart()
-        imu.resetYaw()
+        pinpoint.resetPosAndIMU()
 
         while (opModeIsActive()) {
-            if (gamepad1.options) imu.resetYaw()
 
-            val heading = imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS)
+            pinpoint.update()
+
+            if (gamepad1.options) {
+                pinpoint.resetPosAndIMU()
+            }
+
+            val heading = pinpoint.heading
 
             val stickY = -gamepad1.left_stick_y.toDouble()
             val stickX = gamepad1.left_stick_x.toDouble()
             val rx = gamepad1.right_stick_x.toDouble()
 
-            // rotate the stick vector by -heading
+
             val rotX = stickX * cos(heading) + stickY * sin(heading)
             val rotY = -stickX * sin(heading) + stickY * cos(heading)
 
@@ -72,8 +74,8 @@ class FieldCentric : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
-            // right trigger = intake
-            intake.power = gamepad1.right_trigger.toDouble()
+
+            intake.power = gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble()
 
 
             if (gamepad1.right_bumper) {
@@ -82,15 +84,25 @@ class FieldCentric : LinearOpMode() {
                 flywheel.power = 0.0
             }
 
+            if (gamepad1.left_bumper) {
+                gate.goTarget()
+            } else {
+                gate.goHome()
+            }
 
             frontLeft.write()
             backLeft.write()
             frontRight.write()
             backRight.write()
             intake.write()
+            flywheel.write()
+            gate.write()
 
             telemetry.addData("Heading (deg)", Math.toDegrees(heading))
+            telemetry.addData("Pinpoint Status", pinpoint.deviceStatus)
             telemetry.addData("Intake power", intake.power)
+            telemetry.addData("Flywheel power", flywheel.power)
+            telemetry.addData("Gate Holding", gamepad1.left_bumper)
             telemetry.update()
         }
     }
