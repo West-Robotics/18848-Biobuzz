@@ -95,11 +95,11 @@ class FieldCentric : LinearOpMode() {
             flywheel.write()
             gate.write()
 
-            telemetry.addData("Heading (deg)", Math.toDegrees(heading))
+            telemetry.addData("Robot direction", Math.toDegrees(heading))
             telemetry.addData("Pinpoint Status", pinpoint.deviceStatus)
             telemetry.addData("Intake power", intake.power)
-            telemetry.addData("Flywheel Target RPM", flywheel.targetRpm)
-            telemetry.addData("Flywheel Measured RPM", flywheel.currentRpm)
+            telemetry.addData("Flywheel Target RPM", "%.0f".format(flywheel.targetRpm))
+            telemetry.addData("Flywheel Measured RPM", "%.0f".format(flywheel.currentRpm))
             telemetry.addData("Gate Holding", gamepad1.left_bumper)
             telemetry.update()
         }
