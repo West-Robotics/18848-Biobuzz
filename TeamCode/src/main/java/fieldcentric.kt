@@ -52,7 +52,6 @@ class FieldCentric : LinearOpMode() {
             val stickX = gamepad1.left_stick_x.toDouble()
             val rx = gamepad1.right_stick_x.toDouble()
 
-
             val rotX = stickX * cos(heading) + stickY * sin(heading)
             val rotY = -stickX * sin(heading) + stickY * cos(heading)
 
@@ -74,14 +73,12 @@ class FieldCentric : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
-
             intake.power = gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble()
 
-
             if (gamepad1.right_bumper) {
-                flywheel.power = 1.0
+                flywheel.targetRpm = 3500.0
             } else {
-                flywheel.power = 0.0
+                flywheel.targetRpm = 0.0
             }
 
             if (gamepad1.left_bumper) {
@@ -101,7 +98,8 @@ class FieldCentric : LinearOpMode() {
             telemetry.addData("Heading (deg)", Math.toDegrees(heading))
             telemetry.addData("Pinpoint Status", pinpoint.deviceStatus)
             telemetry.addData("Intake power", intake.power)
-            telemetry.addData("Flywheel power", flywheel.power)
+            telemetry.addData("Flywheel Target RPM", flywheel.targetRpm)
+            telemetry.addData("Flywheel Measured RPM", flywheel.currentRpm)
             telemetry.addData("Gate Holding", gamepad1.left_bumper)
             telemetry.update()
         }
