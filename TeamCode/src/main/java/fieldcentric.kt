@@ -27,6 +27,7 @@ class FieldCentric : LinearOpMode() {
         val intake = Intake(hardwareMap)
         val flywheel = Flywheel(hardwareMap)
         val gate = Gate(hardwareMap)
+        val radius = Radius(hardwareMap)
 
         val pinpoint = hardwareMap.get(GoBildaPinpointDriver::class.java, "pinpoint")
         pinpoint.recalibrateIMU()
@@ -73,7 +74,8 @@ class FieldCentric : LinearOpMode() {
             frontRight.effort = frontRightPower / denominator
             backRight.effort = backRightPower / denominator
 
-            intake.power = gamepad1.right_trigger.toDouble() - gamepad1.left_trigger.toDouble()
+            val outtakePower = if (gamepad1.cross) 1.0 else 0.0
+            intake.power = gamepad1.right_trigger.toDouble() - outtakePower
 
             if (gamepad1.right_bumper) {
                 flywheel.targetRpm = 3500.0
@@ -81,10 +83,18 @@ class FieldCentric : LinearOpMode() {
                 flywheel.targetRpm = 0.0
             }
 
+            // Gate: Hold left bumper to open, release to go home
             if (gamepad1.left_bumper) {
                 gate.goTarget()
             } else {
                 gate.goHome()
+            }
+
+            // Radius servo: dpad_up for nectar, release for pollen
+            if (gamepad1.dpad_up) {
+                radius.nectar()
+            } else {
+                radius.pollen()
             }
 
             frontLeft.write()
@@ -94,6 +104,7 @@ class FieldCentric : LinearOpMode() {
             intake.write()
             flywheel.write()
             gate.write()
+            radius.write()
 
             telemetry.addData("Robot direction", Math.toDegrees(heading))
             telemetry.addData("Pinpoint Status", pinpoint.deviceStatus)
@@ -101,6 +112,7 @@ class FieldCentric : LinearOpMode() {
             telemetry.addData("Flywheel Target RPM", "%.0f".format(flywheel.targetRpm))
             telemetry.addData("Flywheel Measured RPM", "%.0f".format(flywheel.currentRpm))
             telemetry.addData("Gate Holding", gamepad1.left_bumper)
+            telemetry.addData("Radius Nectar", gamepad1.dpad_up)
             telemetry.update()
         }
     }
