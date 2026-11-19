@@ -110,6 +110,7 @@ class FieldCentric : LinearOpMode() {
             telemetry.addData("Flywheel Target RPM", "%.0f".format(flywheel.targetRpm))
             telemetry.addData("Flywheel Measured RPM", "%.0f".format(flywheel.currentRpm))
             telemetry.addData("Gate", gamepad1.left_bumper)
+            telemetry.addData("Radius", gamepad1.dpad_up)
             telemetry.update()
         }
     }
