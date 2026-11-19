@@ -83,18 +83,16 @@ class FieldCentric : LinearOpMode() {
                 flywheel.targetRpm = 0.0
             }
 
-            // Gate: Hold left bumper to open, release to go home
             if (gamepad1.left_bumper) {
                 gate.goTarget()
             } else {
                 gate.goHome()
             }
 
-            // Radius servo: dpad_up for nectar, release for pollen
             if (gamepad1.dpad_up) {
-                radius.nectar()
-            } else {
                 radius.pollen()
+            } else if (gamepad1.dpad_down) {
+                radius.nectar()
             }
 
             frontLeft.write()
@@ -111,8 +109,7 @@ class FieldCentric : LinearOpMode() {
             telemetry.addData("Intake power", intake.power)
             telemetry.addData("Flywheel Target RPM", "%.0f".format(flywheel.targetRpm))
             telemetry.addData("Flywheel Measured RPM", "%.0f".format(flywheel.currentRpm))
-            telemetry.addData("Gate Holding", gamepad1.left_bumper)
-            telemetry.addData("Radius Nectar", gamepad1.dpad_up)
+            telemetry.addData("Gate", gamepad1.left_bumper)
             telemetry.update()
         }
     }

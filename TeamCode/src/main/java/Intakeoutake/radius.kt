@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.ServoImplEx
 class Radius(hardwareMap: HardwareMap) {
     private val servo: ServoImplEx = hardwareMap.get(ServoImplEx::class.java, "radius")
 
-    private val homePosition = 0.3
-    private val targetPosition = 0.4
+    var pollenPosition: Double = 0.6
+    var nectarPosition: Double = 0.3
 
     init {
         servo.pwmRange = PwmControl.PwmRange(500.0, 2500.0, 5000.0)
@@ -16,14 +16,13 @@ class Radius(hardwareMap: HardwareMap) {
     }
 
     fun pollen() {
-        servo.position = homePosition
+        servo.position = pollenPosition
     }
 
     fun nectar() {
-        servo.position = targetPosition
+        servo.position = nectarPosition
     }
 
     fun write() {
-        // Servo position is set directly in pollen/nectar
     }
 }

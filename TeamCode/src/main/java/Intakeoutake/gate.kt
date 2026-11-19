@@ -24,6 +24,5 @@ class Gate(hardwareMap: HardwareMap) {
     }
 
     fun write() {
-        // Servo position is set directly in goHome/goTarget
     }
 }
